@@ -1,5 +1,6 @@
-from cargo import Vhinny
+from vhinny import Vhinny
 import unittest
+
 
 class VhinnyTests(unittest.TestCase):
 

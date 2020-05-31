@@ -1,4 +1,5 @@
 import requests
+from requests.exceptions import ReadTimeout
 import json
 
 
@@ -15,11 +16,16 @@ class Vhinny:
         :param params:
         :return:
         """
-        response = requests.get(self.BACKEND_URL, params=params, timeout=1.5)
-        data = json.loads(response.text)['data']
+        try:
+            response = requests.get(self.BACKEND_URL, params=params, timeout=5)
+            data = json.loads(response.text)['data']
+        except ReadTimeout:
+            raise ReadTimeout("Your request timed out. Please try again later")
+
         return data
 
-    def _clean_response(self, data, prefix):
+    @staticmethod
+    def _clean_response(data, prefix):
         """
         Cleaup returned response: remove prefixes and sort by the alphabetical order
         :param data:dict

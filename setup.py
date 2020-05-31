@@ -5,14 +5,15 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vhinny", # Replace with your own username
-    version="0.0.1",
+    version="0.0.3",
     author="Vitalii Dodonov",
     author_email="admin@vhinny.com",
     description="Vhinny Financial Data API",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/vhinny-investing/api",
-    packages=setuptools.find_packages(),
+    packages=['vhinny'],
+    install_requires=['requests'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
