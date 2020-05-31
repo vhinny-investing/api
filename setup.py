@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vhinny", # Replace with your own username
-    version="0.0.3",
+    version="0.0.4",
     author="Vitalii Dodonov",
     author_email="admin@vhinny.com",
     description="Vhinny Financial Data API",

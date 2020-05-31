@@ -21,6 +21,14 @@ class VhinnyTests(unittest.TestCase):
         print(f'Cash Flows Statement: {data}')
         assert 'cash_at_period_end' in data, f'Expected item is not returned: cash_at_period_end'
 
+    def test_invalide_ticker(self):
+        data = self.vhinny.balance_sheet('HSPSD', 2013)
+
+    # def test_stress(self):
+    #     for i in range(100):
+    #         data = self.vhinny.balance_sheet('AAPL', 2013)
+    #         print(i, data)
+
 
 if __name__ == '__main__':
     unittest.main()

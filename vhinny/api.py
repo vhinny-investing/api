@@ -1,14 +1,18 @@
-import requests
+from .common import BaseHelpers
 from requests.exceptions import ReadTimeout
+import requests
+import logging
 import json
 
 
-class Vhinny:
+class Vhinny(BaseHelpers):
 
     BACKEND_URL = 'https://7pwlq44lyc.execute-api.us-east-1.amazonaws.com/production/api-financials'
 
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.API_KEY = None
+        self.log.info('Hello! Shall you have any questions, API documentation can be found at https://github.com/vhinny-investing/api')
 
     def _send(self, params):
         """
@@ -18,10 +22,12 @@ class Vhinny:
         """
         try:
             response = requests.get(self.BACKEND_URL, params=params, timeout=5)
+            if response.status_code == 204:
+                self.log.warning(f'Data requested for (ticker={params["ticker"]}, year={params["year"]}) was not found')
+                return None
             data = json.loads(response.text)['data']
         except ReadTimeout:
             raise ReadTimeout("Your request timed out. Please try again later")
-
         return data
 
     @staticmethod
@@ -50,7 +56,8 @@ class Vhinny:
             'year': int(year),
         }
         data = self._send(params)
-        data = self._clean_response(data=data, prefix='bs_')
+        if data is not None:
+            data = self._clean_response(data=data, prefix='bs_')
         return data
 
     def income_statement(self, ticker, year):
@@ -66,8 +73,8 @@ class Vhinny:
             'year': int(year),
         }
         data = self._send(params)
-        data = self._clean_response(data=data, prefix='is_')
-
+        if data is not None:
+            data = self._clean_response(data=data, prefix='is_')
         return data
 
     def cash_flows(self, ticker, year):
@@ -83,5 +90,6 @@ class Vhinny:
             'year': int(year),
         }
         data = self._send(params)
-        data = self._clean_response(data=data, prefix='cf_')
+        if data is not None:
+            data = self._clean_response(data=data, prefix='cf_')
         return data
