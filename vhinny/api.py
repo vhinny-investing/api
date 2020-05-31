@@ -1,18 +1,19 @@
 from .common import BaseHelpers
+from .common.logger import init_logger
 from requests.exceptions import ReadTimeout
 import requests
-import logging
 import json
 
 
-class Vhinny(BaseHelpers):
+class Vhinny():
 
     BACKEND_URL = 'https://7pwlq44lyc.execute-api.us-east-1.amazonaws.com/production/api-financials'
 
+    log = init_logger('Vhinny', log_level='INFO')
+    log.info('Hello! If you have any questions, API documentation can be found at https://github.com/vhinny-investing/api')
+
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
         self.API_KEY = None
-        self.log.info('Hello! Shall you have any questions, API documentation can be found at https://github.com/vhinny-investing/api')
 
     def _send(self, params):
         """
