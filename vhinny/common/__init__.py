@@ -1,1 +1,1 @@
-from .base import BaseHelpers
+from vhinny.common.base import BaseHelpers
